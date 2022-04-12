@@ -1,28 +1,30 @@
 <template>
     <div>
         <h1>My super application</h1>
+        <router-link to="/posts/new">
+            New Post
+        </router-link>
         <router-link 
-            v-for="post in store.posts"
-            :key="post.id"
-        >
+            v-for="post in posts"
+            :to="`/posts/${post.id}`"
+            :key="post.id">
+            <div>
+                {{ post.title }}   
+            </div>
         </router-link>
         <router-view />
     </div>
 </template>
 
 <script>
-import { Store } from './store.js'
 import { reactive } from 'vue'
+import { usePosts } from './usePosts.js'
 
 export default {
     setup(){
-
-        const store = reactive(new Store())
-
-
-
+        const posts = usePosts().posts 
         return {
-            store,
+            posts,
         }
     }
 }
